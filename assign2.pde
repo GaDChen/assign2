@@ -1,4 +1,5 @@
 // global variables
+int currentTime = 0;
 float frogX, frogY, frogW, frogH, frogInitX, frogInitY;
 float leftCar1X, leftCar1Y, leftCar1W, leftCar1H;//car1
 float leftCar2X, leftCar2Y, leftCar2W, leftCar2H;//car2
@@ -69,10 +70,11 @@ void draw(){
         text("Press Enter", width/3, height/2);    
         break;
     case FROG_DIE:
-        delay(1000);
-        frogX=frogInitX;
-        frogY=frogInitY;
-        gameState = GAME_RUN;
+      if(millis()-currentTime >= 1000){
+      frogX=frogInitX;
+      frogY=frogInitY;
+      gameState = GAME_RUN;
+      }
         break;
     case GAME_RUN:
         background(10,110,16);
@@ -129,6 +131,7 @@ void draw(){
          if ((abs(leftCar1X-frogX)<(leftCar1W))&&(abs(leftCar1Y-frogY)<(leftCar1H))
          )
          {
+         currentTime = millis();
          image(imgDeadFrog, frogX, frogY);
          life--;
          gameState = FROG_DIE;
